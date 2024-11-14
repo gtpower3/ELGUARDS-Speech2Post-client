@@ -20,21 +20,29 @@ const msgObj = {
 }
 
 function App() {
-  async function submitVoiceData(text) {
-    return;
+  const [promptText, setPromptText] = useState('');
+  const [isAwaitOptimizedResult, setisAwaitOptimizedResult] = useState(false);
+  const [isShowingResultCards, setisShowingResultCards] = useState(false);
+  const [optimizedResult, setOptimizedResult] = useState(null);
+
+  const submitVoiceData = async (text) => {
+    // return;
+    setisShowingResultCards(true);
+    setisAwaitOptimizedResult(true);
     try {
       const res = await axios.post('http://localhost:3030/api/optimize', { content: text });
       console.log(res.status === 200 ? "Success!" : "Failed");
-      const resObj = await res.data;
+      const resObj = res.data;
       setOptimizedResult(resObj);
       console.log(resObj)
     } catch (error) {
       console.error(error);
     }
+    finally {
+      setisAwaitOptimizedResult(false); // Stop loading indicator
+    }
   }
 
-  const [promptText, setPromptText] = useState('');
-  const [optimizedResult, setOptimizedResult] = useState({ facebook: { content: '' }, twitter: { content: '' }, instagram: { content: '' }, linkedin: { content: '' }, suggestedImageContent: '' });
   return (
     <div className="App">
       <div className='input-container'>
@@ -43,7 +51,7 @@ function App() {
           id="prompt-input"
           label="TESTING - Enter prompt here"
           multiline
-          rows={{ xs: 1, sm: 2, md: 4 }}
+          rows={10}
           onChange={e => setPromptText(e.target.value)}
           sx={{ width: '100%' }}
         />
@@ -55,15 +63,29 @@ function App() {
       <pre>{msgObj.linkedin.content}</pre>
       <pre>{msgObj.instagram.content}</pre>
       <pre>{msgObj.suggestedImageContent}</pre> */}
-      <SocialMediaCardContainer>
+      {/* <SocialMediaCardContainer>
         <SocialMediaCard title="Facebook" content={msgObj.facebook.content} isLoading={false} />
         <SocialMediaCard title="X (formerly Twitter)" content={msgObj.twitter.content} isLoading={false} />
         <SocialMediaCard title="LinkedIn" content={msgObj.linkedin.content} isLoading={false} />
         <SocialMediaCard title="Instagram" content={msgObj.instagram.content} isLoading={false} />
         <SocialMediaCard />
-      </SocialMediaCardContainer>
-
-
+      </SocialMediaCardContainer> */}
+      {isShowingResultCards &&
+        (isAwaitOptimizedResult || !optimizedResult ? <SocialMediaCardContainer>
+          <SocialMediaCard title="Facebook" isLoading={isAwaitOptimizedResult} />
+          <SocialMediaCard title="X (formerly Twitter)" isLoading={isAwaitOptimizedResult} />
+          <SocialMediaCard title="LinkedIn" isLoading={isAwaitOptimizedResult} />
+          <SocialMediaCard title="Instagram" isLoading={isAwaitOptimizedResult} />
+        </SocialMediaCardContainer>
+          :
+          <SocialMediaCardContainer>
+            <SocialMediaCard title="Facebook" content={optimizedResult.facebook?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
+            <SocialMediaCard title="X (formerly Twitter)" content={optimizedResult.twitter?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
+            <SocialMediaCard title="LinkedIn" content={optimizedResult.linkedin?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
+            <SocialMediaCard title="Instagram" content={optimizedResult.instagram?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
+            {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
+          </SocialMediaCardContainer>)
+      }
     </div>
   );
 }
