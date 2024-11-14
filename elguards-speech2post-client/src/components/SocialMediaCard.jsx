@@ -2,6 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Button, CardActions, Skeleton, TextField } from "@mui/material";
+import { createTheme } from "@mui/material/styles";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,6 +12,14 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#0550F0",
+    },
+  },
+});
 
 export default function SocialMediaCard({
   title = "",
@@ -96,6 +105,7 @@ export default function SocialMediaCard({
         <Button
           size="small"
           variant="contained"
+          color={theme.palette.primary.main}
           disabled={isLoading || isEditing ? true : false}
         >
           {isLoading ? <Skeleton width={"100%"} /> : "Post"}

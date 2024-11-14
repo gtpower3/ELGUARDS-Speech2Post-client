@@ -2,13 +2,18 @@ import logo from './logo.svg';
 import './App.css';
 import { useState } from 'react';
 import axios from 'axios'
-
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import { Box, Button, CardActions, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import SocialMediaCard from './components/SocialMediaCard';
 import SocialMediaCardContainer from './components/SocialMediaCardContainer';
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#0550F0",
+    },
+  },
+});
 
 
 const msgObj = {
@@ -53,9 +58,12 @@ function App() {
           multiline
           rows={10}
           onChange={e => setPromptText(e.target.value)}
-          sx={{ width: '100%' }}
+          sx={{ width: '100%', bgcolor: "white" }}
         />
-        <Button variant="contained" onClick={() => submitVoiceData(promptText)}>Submit</Button>
+        <ThemeProvider theme={theme}>
+          <Button variant="contained" onClick={() => submitVoiceData(promptText)}>Submit</Button>
+        </ThemeProvider>
+
       </div>
 
       {/* <pre>{msgObj.facebook.content}</pre>
