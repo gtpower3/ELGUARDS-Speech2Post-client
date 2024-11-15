@@ -1,19 +1,12 @@
-import logo from './logo.svg';
+import logo from './images/ELGUARDS_LOGO-02.svg';
 import './App.css';
 import { useState } from 'react';
 import axios from 'axios'
-import { Button, TextField } from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
+import MicIcon from '@mui/icons-material/Mic';
 import SocialMediaCard from './components/SocialMediaCard';
 import SocialMediaCardContainer from './components/SocialMediaCardContainer';
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: "#0550F0",
-    },
-  },
-});
+import SpeechToTextInput from './components/SpeechToTextInput';
 
 
 const msgObj = {
@@ -29,6 +22,10 @@ function App() {
   const [isAwaitOptimizedResult, setisAwaitOptimizedResult] = useState(false);
   const [isShowingResultCards, setisShowingResultCards] = useState(false);
   const [optimizedResult, setOptimizedResult] = useState(null);
+  const [dataFromChild, setDataFromChild] = useState('');
+  const handleDataFromChild = (data) => {
+    setOptimizedResult(data);
+  }
 
   const submitVoiceData = async (text) => {
     // return;
@@ -51,19 +48,10 @@ function App() {
   return (
     <div className="App">
       <div className='input-container'>
-        <h1>Speech 2 Post</h1>
-        <TextField
-          id="prompt-input"
-          label="TESTING - Enter prompt here"
-          multiline
-          rows={10}
-          onChange={e => setPromptText(e.target.value)}
-          sx={{ width: '100%', bgcolor: "white" }}
-        />
-        <ThemeProvider theme={theme}>
-          <Button variant="contained" onClick={() => submitVoiceData(promptText)}>Submit</Button>
-        </ThemeProvider>
-
+        <img src={logo} alt="ELGUARDS Logo" width="400em" />
+        <Typography gutterBottom variant='h3'>Speech2Post</Typography>
+        {/* <h1>Speech 2 Post</h1> */}
+        <SpeechToTextInput onDataFromChild={handleDataFromChild} />
       </div>
 
       {/* <pre>{msgObj.facebook.content}</pre>
@@ -76,9 +64,25 @@ function App() {
         <SocialMediaCard title="X (formerly Twitter)" content={msgObj.twitter.content} isLoading={false} />
         <SocialMediaCard title="LinkedIn" content={msgObj.linkedin.content} isLoading={false} />
         <SocialMediaCard title="Instagram" content={msgObj.instagram.content} isLoading={false} />
-        <SocialMediaCard />
       </SocialMediaCardContainer> */}
-      {isShowingResultCards &&
+      {
+        (!optimizedResult ? <SocialMediaCardContainer>
+          <SocialMediaCard title="Facebook" isLoading={isAwaitOptimizedResult} />
+          <SocialMediaCard title="X (formerly Twitter)" isLoading={isAwaitOptimizedResult} />
+          <SocialMediaCard title="LinkedIn" isLoading={isAwaitOptimizedResult} />
+          <SocialMediaCard title="Instagram" isLoading={isAwaitOptimizedResult} />
+        </SocialMediaCardContainer>
+          :
+          <SocialMediaCardContainer>
+            <SocialMediaCard title="Facebook" content={optimizedResult.facebook?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
+            <SocialMediaCard title="X (formerly Twitter)" content={optimizedResult.twitter?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
+            <SocialMediaCard title="LinkedIn" content={optimizedResult.linkedin?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
+            <SocialMediaCard title="Instagram" content={optimizedResult.instagram?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
+            {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
+          </SocialMediaCardContainer>)
+      }
+      {
+        isShowingResultCards &&
         (isAwaitOptimizedResult || !optimizedResult ? <SocialMediaCardContainer>
           <SocialMediaCard title="Facebook" isLoading={isAwaitOptimizedResult} />
           <SocialMediaCard title="X (formerly Twitter)" isLoading={isAwaitOptimizedResult} />
@@ -94,7 +98,7 @@ function App() {
             {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
           </SocialMediaCardContainer>)
       }
-    </div>
+    </div >
   );
 }
 

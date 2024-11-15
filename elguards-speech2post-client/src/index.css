@@ -1,11 +1,30 @@
+@font-face {
+  font-family: "Aeonik Regular";
+  src: url("./fonts/Aeonik/Aeonik-Regular.ttf") format("embedded-opentype"),
+    url("./fonts/Aeonik/Aeonik-Regular.ttf") format("woff2"),
+    url("./fonts/Aeonik/Aeonik-Regular.ttf") format("woff"),
+    url("./fonts/Aeonik/Aeonik-Regular.ttf") format("truetype"),
+    url("./fonts/Aeonik/Aeonik-Regular.ttf") format("svg");
+}
+
+@font-face {
+  font-family: "Aeonik Light", sans-serif;
+  src: "./fonts/Aeonik/Aeonik-Light.ttf";
+}
+
+@font-face {
+  font-family: "Aeonik Medium", sans-serif;
+  src: "./fonts/Aeonik/Aeonik-Medium.ttf";
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Aeonik Regular", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #e0e0e0;
-  color: #1a1833;
+  /* color: #1a1833; */
   display: flex;
   flex-direction: column;
   justify-content: center;

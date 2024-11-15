@@ -1,0 +1,12 @@
+.input-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container-button-group {
+  margin-top: 0.2em;
+  align-self: flex-end;
+}
