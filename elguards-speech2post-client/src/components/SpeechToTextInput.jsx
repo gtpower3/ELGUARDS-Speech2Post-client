@@ -1,13 +1,27 @@
-import { Button, TextField } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import MicIcon from "@mui/icons-material/Mic";
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import "./SpeechToTextInput.css";
 
-const SpeechToTextInput = ({ onDataFromChild }) => {
-  const [inputText, setInputText] = useState("");
-  const [transcribedText, setTranscribedText] = useState("");
+const SpeechToTextInput = ({
+  onSendData,
+  onIsLoading,
+  onIsShowingResultCards,
+}) => {
+  const [inputText, setInputText] = useState(null);
+  const [isAcceptInput, setIsAcceptInput] = useState(true);
+  const [isShowMic, setIsShowMic] = useState(true);
+  const [isShowSubmit, setIsShowSubmit] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [isLoadingTranscript, setIsLoadingTranscript] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
@@ -57,16 +71,21 @@ const SpeechToTextInput = ({ onDataFromChild }) => {
     formData.append("audio", audioBlob);
 
     try {
-      const response = await fetch("http://192.168.1.41:3030/api/transcribe", {
+      setIsAcceptInput(false);
+      setIsLoadingTranscript(true);
+      const response = await fetch("http://localhost:3030/api/transcribe", {
         method: "POST",
         body: formData,
       });
 
       const data = await response.json();
-      setTranscribedText(data.transcription);
       setInputText(data.transcription);
     } catch (error) {
       console.error("Error transcribing audio", error);
+    } finally {
+      setIsLoadingTranscript(false);
+      setInputText("what we heard");
+      setIsShowMic(false); //if success
     }
   };
 
@@ -75,13 +94,13 @@ const SpeechToTextInput = ({ onDataFromChild }) => {
     // setisShowingResultCards(true);
     // setisAwaitOptimizedResult(true);
     try {
-      const res = await axios.post("http://192.168.1.41:3030/api/optimize", {
+      const res = await axios.post("http://localhost:3030/api/optimize", {
         content: inputText,
       });
       console.log(res.status === 200 ? "Success!" : "Failed");
       const resObj = res.data;
-      onDataFromChild(resObj);
-      console.log(resObj);
+      onSendData(resObj);
+      // console.log(resObj);
     } catch (error) {
       console.error(error);
     } finally {
@@ -89,23 +108,73 @@ const SpeechToTextInput = ({ onDataFromChild }) => {
     }
   };
 
-  const sendDataToParent = () => {
-    onDataFromChild(inputText);
+  const handleShowMic = () => {
+    isShowMic ? setIsShowMic(false) : setIsShowMic(true);
+    isShowMic ? setIsShowSubmit(true) : setIsShowSubmit(false);
   };
 
   return (
-    <div className="input-container" style={{ width: "100%" }}>
-      <TextField
-        id="prompt-input"
-        label="TESTING - Enter prompt here"
-        multiline
-        rows={10}
-        value={inputText}
-        onChange={(e) => setInputText(e.target.value)}
-        sx={{ width: "100%", bgcolor: "white" }}
-      />
-      <div className="input-container-button-group">
-        {/* <Button variant="contained" >:</Button> */}
+    <div className="input-container">
+      {isLoadingTranscript && <CircularProgress size={"5em"} />}
+      {isAcceptInput &&
+        (isShowMic ? (
+          <Tooltip
+            title={isListening ? "Stop recording" : "Start recording"}
+            placement="top"
+          >
+            <IconButton onClick={isListening ? stopListening : startListening}>
+              <MicIcon
+                sx={{
+                  color: isListening ? "red" : "#0550f0",
+                  fontSize: 200,
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+        ) : (
+          <TextField
+            id="input-text"
+            label="Enter text here"
+            multiline
+            rows={10}
+            value={inputText}
+            required
+            onChange={(e) => setInputText(e.target.value)}
+            sx={{ width: "100%", bgcolor: "white" }}
+          />
+        ))}
+      {isAcceptInput && (
+        <Button
+          size="small"
+          disabled={isListening || isLoadingTranscript}
+          onClick={handleShowMic}
+          sx={{ color: "#3E4DA1" }}
+        >
+          {isShowMic ? "or type it instead" : "or record it instead"}
+        </Button>
+      )}
+      {isShowSubmit && (
+        <Button variant="contained" onClick={submitInput}>
+          Submit
+        </Button>
+      )}
+      {inputText && (
+        <div style={{ width: "100%" }}>
+          <Typography variant="h4">What we heard</Typography>
+          <TextField
+            id="input-text"
+            label="Enter text here"
+            multiline
+            rows={10}
+            value={inputText}
+            required
+            onChange={(e) => setInputText(e.target.value)}
+            sx={{ width: "100%", bgcolor: "white" }}
+          />
+        </div>
+      )}
+
+      {/* <div className="input-container-button-group">
         <Button
           variant="contained"
           onClick={isListening ? stopListening : startListening}
@@ -116,10 +185,8 @@ const SpeechToTextInput = ({ onDataFromChild }) => {
         >
           <MicIcon color="secondary" />
         </Button>
-        <Button variant="contained" onClick={submitInput}>
-          Submit
-        </Button>
-      </div>
+        
+      </div> */}
 
       {/* <div>
         <h2>Transcribed Text:</h2>

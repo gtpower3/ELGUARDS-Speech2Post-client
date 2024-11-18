@@ -1,9 +1,7 @@
-import logo from './images/ELGUARDS_LOGO-02.svg';
+import logo from './images/ELGUARDS_LOGO-01.svg';
 import './App.css';
-import { useState } from 'react';
-import axios from 'axios'
-import { Button, TextField, Typography } from '@mui/material';
-import MicIcon from '@mui/icons-material/Mic';
+import { useEffect, useRef, useState } from 'react';
+import { Button, Typography, } from '@mui/material';
 import SocialMediaCard from './components/SocialMediaCard';
 import SocialMediaCardContainer from './components/SocialMediaCardContainer';
 import SpeechToTextInput from './components/SpeechToTextInput';
@@ -18,41 +16,79 @@ const msgObj = {
 }
 
 function App() {
-  const [promptText, setPromptText] = useState('');
-  const [isAwaitOptimizedResult, setisAwaitOptimizedResult] = useState(false);
-  const [isShowingResultCards, setisShowingResultCards] = useState(false);
-  const [optimizedResult, setOptimizedResult] = useState(null);
-  const [dataFromChild, setDataFromChild] = useState('');
+
+  const [scrollingDown, setScrollingDown] = useState(false);
+  const [resultData, setResultData] = useState(msgObj);
   const handleDataFromChild = (data) => {
-    setOptimizedResult(data);
+    setResultData(data);
   }
 
-  const submitVoiceData = async (text) => {
-    // return;
-    setisShowingResultCards(true);
-    setisAwaitOptimizedResult(true);
-    try {
-      const res = await axios.post('http://localhost:3030/api/optimize', { content: text });
-      console.log(res.status === 200 ? "Success!" : "Failed");
-      const resObj = res.data;
-      setOptimizedResult(resObj);
-      console.log(resObj)
-    } catch (error) {
-      console.error(error);
-    }
-    finally {
-      setisAwaitOptimizedResult(false); // Stop loading indicator
-    }
+  const [isLoading, setIsLoading] = useState(false);
+  const handleIsLoading = (isLoading) => {
+    setIsLoading(isLoading);
   }
+
+  const [isShowingInput, setIsShowingInput] = useState(false);
+  const handleIsShowingInput = () => {
+    setIsShowingInput(true);
+  }
+
+  const [isShowingResultCards, setIsShowingResultCards] = useState(false);
+  const handleIsShowingResultCards = (isShowingResultCards) => {
+    setIsShowingResultCards(isShowingResultCards);
+  }
+
+  // Reference to the input section for scrolling
+  const inputSectionRef = useRef(null);
+
+  // Handle button click
+  const handleButtonClick = () => {
+    setIsShowingInput(true); // Show the input section when the button is clicked
+  };
+
+  // Scroll to the input section if it's visible
+  useEffect(() => {
+    if (isShowingInput && inputSectionRef.current) {
+      inputSectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [isShowingInput]);
+
+  // const submitVoiceData = async (text) => {
+  //   // return;
+  //   setisShowingResultCards(true);
+  //   setIsLoading(true);
+  //   try {
+  //     const res = await axios.post('http://localhost:3030/api/optimize', { content: text });
+  //     console.log(res.status === 200 ? "Success!" : "Failed");
+  //     const resObj = res.data;
+  //     setResultData(resObj);
+  //     console.log(resObj)
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  //   finally {
+  //     setIsLoading(false); // Stop loading indicator
+  //   }
+  // }
 
   return (
     <div className="App">
-      <div className='input-container'>
+      {!isShowingInput && <section className='cover-page'>
         <img src={logo} alt="ELGUARDS Logo" width="400em" />
         <Typography gutterBottom variant='h3'>Speech2Post</Typography>
-        {/* <h1>Speech 2 Post</h1> */}
-        <SpeechToTextInput onDataFromChild={handleDataFromChild} />
-      </div>
+        <Button
+          size="small"
+          variant="contained"
+          sx={{ width: "10em", height: "5em" }}
+          onClick={handleButtonClick}
+        >
+          Start now!
+        </Button>
+      </section>}
+
+      {isShowingInput && <section className='input-page' ref={inputSectionRef}><SpeechToTextInput onSendData={handleDataFromChild} onIsLoading={handleIsLoading} onIsShowingResultCards={handleIsShowingResultCards} /></section>}
+
+
 
       {/* <pre>{msgObj.facebook.content}</pre>
       <pre>{msgObj.twitter.content}</pre>
@@ -66,39 +102,44 @@ function App() {
         <SocialMediaCard title="Instagram" content={msgObj.instagram.content} isLoading={false} />
       </SocialMediaCardContainer> */}
       {
-        (!optimizedResult ? <SocialMediaCardContainer>
-          <SocialMediaCard title="Facebook" isLoading={isAwaitOptimizedResult} />
-          <SocialMediaCard title="X (formerly Twitter)" isLoading={isAwaitOptimizedResult} />
-          <SocialMediaCard title="LinkedIn" isLoading={isAwaitOptimizedResult} />
-          <SocialMediaCard title="Instagram" isLoading={isAwaitOptimizedResult} />
-        </SocialMediaCardContainer>
-          :
-          <SocialMediaCardContainer>
-            <SocialMediaCard title="Facebook" content={optimizedResult.facebook?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
-            <SocialMediaCard title="X (formerly Twitter)" content={optimizedResult.twitter?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
-            <SocialMediaCard title="LinkedIn" content={optimizedResult.linkedin?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
-            <SocialMediaCard title="Instagram" content={optimizedResult.instagram?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
-            {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
-          </SocialMediaCardContainer>)
+        // (!resultData ? <SocialMediaCardContainer>
+        //     <SocialMediaCard title="Facebook" isLoading={isLoading} />
+        //     <SocialMediaCard title="X (formerly Twitter)" isLoading={isLoading} />
+        //     <SocialMediaCard title="LinkedIn" isLoading={isLoading} />
+        //     <SocialMediaCard title="Instagram" isLoading={isLoading} />
+        //   </SocialMediaCardContainer>
+        //     :
+        //     <SocialMediaCardContainer>
+        //       <SocialMediaCard title="Facebook" content={resultData.facebook?.content || 'No content available'} isLoading={isLoading} />
+        //       <SocialMediaCard title="X (formerly Twitter)" content={resultData.twitter?.content || 'No content available'} isLoading={isLoading} />
+        //       <SocialMediaCard title="LinkedIn" content={resultData.linkedin?.content || 'No content available'} isLoading={isLoading} />
+        //       <SocialMediaCard title="Instagram" content={resultData.instagram?.content || 'No content available'} isLoading={isLoading} />
+        //       {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
+        //     </SocialMediaCardContainer>)
       }
       {
         isShowingResultCards &&
-        (isAwaitOptimizedResult || !optimizedResult ? <SocialMediaCardContainer>
-          <SocialMediaCard title="Facebook" isLoading={isAwaitOptimizedResult} />
-          <SocialMediaCard title="X (formerly Twitter)" isLoading={isAwaitOptimizedResult} />
-          <SocialMediaCard title="LinkedIn" isLoading={isAwaitOptimizedResult} />
-          <SocialMediaCard title="Instagram" isLoading={isAwaitOptimizedResult} />
-        </SocialMediaCardContainer>
+        (isLoading || !resultData ?
+          <div style={{ width: "100%" }}>
+            <SocialMediaCardContainer>
+              <SocialMediaCard title="Facebook" isLoading={isLoading} />
+              <SocialMediaCard title="X (formerly Twitter)" isLoading={isLoading} />
+              <SocialMediaCard title="LinkedIn" isLoading={isLoading} />
+              <SocialMediaCard title="Instagram" isLoading={isLoading} />
+            </SocialMediaCardContainer>
+          </div>
           :
-          <SocialMediaCardContainer>
-            <SocialMediaCard title="Facebook" content={optimizedResult.facebook?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
-            <SocialMediaCard title="X (formerly Twitter)" content={optimizedResult.twitter?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
-            <SocialMediaCard title="LinkedIn" content={optimizedResult.linkedin?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
-            <SocialMediaCard title="Instagram" content={optimizedResult.instagram?.content || 'No content available'} isLoading={isAwaitOptimizedResult} />
-            {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
-          </SocialMediaCardContainer>)
+          <div style={{ width: "100%" }}>
+            <SocialMediaCardContainer>
+              <SocialMediaCard title="Facebook" content={resultData.facebook?.content || 'No content available'} isLoading={isLoading} />
+              <SocialMediaCard title="X (formerly Twitter)" content={resultData.twitter?.content || 'No content available'} isLoading={isLoading} />
+              <SocialMediaCard title="LinkedIn" content={resultData.linkedin?.content || 'No content available'} isLoading={isLoading} />
+              <SocialMediaCard title="Instagram" content={resultData.instagram?.content || 'No content available'} isLoading={isLoading} />
+              {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
+            </SocialMediaCardContainer>
+          </div>)
       }
-    </div >
+    </div>
   );
 }
 

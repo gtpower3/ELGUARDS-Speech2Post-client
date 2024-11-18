@@ -1,21 +1,9 @@
-import { Box, Stack } from "@mui/material";
+import { Grid2 } from "@mui/material";
 
 export default function SocialMediaCardContainer({ children }) {
   return (
-    <Box
-      component="section"
-      sx={{
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-      }}
-    >
-      <Stack
-        direction={{ xs: "column", sm: "row" }}
-        spacing={{ xs: 1, sm: 2, md: 2 }}
-      >
-        {children}
-      </Stack>
-    </Box>
+    <Grid2 container spacing={1} justifyContent={"center"}>
+      {children}
+    </Grid2>
   );
 }

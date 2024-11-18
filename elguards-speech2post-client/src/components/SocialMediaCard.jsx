@@ -44,14 +44,14 @@ export default function SocialMediaCard({
     <Card
       variant="elevation"
       sx={{
-        width: "25em",
+        width: "22em",
         height: "25em",
         display: "flex",
         flexDirection: "column",
         textAlign: "left",
       }}
     >
-      <CardContent>
+      <CardContent sx={{ height: "70%" }}>
         {setTitleIcon()}
         <Typography gutterBottom sx={{ color: "text.primary", fontSize: 14 }}>
           {isLoading ? <Skeleton width="60%" /> : title}
@@ -69,6 +69,8 @@ export default function SocialMediaCard({
           <Typography
             variant="body2"
             component="p"
+            overflow={"auto"}
+            height={"100%"}
             sx={{ color: "text.secondary" }}
           >
             {isLoading ? (
