@@ -1,0 +1,30 @@
+{
+  "en": [
+    {
+      "icon": "",
+      "name": "USA",
+      "abbr": "US",
+      "code": "1"
+    }
+  ],
+  "ar": [
+    {
+      "icon": "🇦🇪",
+      "name": "UAE",
+      "abbr": "AE",
+      "code": "971"
+    },
+    {
+      "icon": "🇸🇦",
+      "name": "KSA",
+      "abbr": "SA",
+      "code": "966"
+    },
+    {
+      "icon": "🇪🇬",
+      "name": "Egypt",
+      "abbr": "EG",
+      "code": "20"
+    }
+  ]
+}

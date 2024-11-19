@@ -1,11 +1,11 @@
 import logo from './images/ELGUARDS_LOGO-01.svg';
 import './App.css';
 import { useEffect, useRef, useState } from 'react';
-import { Button, Typography, } from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography, } from '@mui/material';
 import SocialMediaCard from './components/SocialMediaCard';
 import SocialMediaCardContainer from './components/SocialMediaCardContainer';
 import SpeechToTextInput from './components/SpeechToTextInput';
-
+import { useTranslation } from 'react-i18next';
 
 const msgObj = {
   facebook: { content: "🚨 Stay vigilant! 🚨 Attackers are using social engineering techniques to commit various types of fraud, including phone, credit card, finance, and government document fraud. Protect your identity and personal information! #CyberSecurity #FraudPrevention" },
@@ -16,8 +16,7 @@ const msgObj = {
 }
 
 function App() {
-
-  const [scrollingDown, setScrollingDown] = useState(false);
+  const { t, i18n } = useTranslation();
   const [resultData, setResultData] = useState(msgObj);
   const handleDataFromChild = (data) => {
     setResultData(data);
@@ -53,6 +52,8 @@ function App() {
     }
   }, [isShowingInput]);
 
+
+
   // const submitVoiceData = async (text) => {
   //   // return;
   //   setisShowingResultCards(true);
@@ -70,23 +71,50 @@ function App() {
   //     setIsLoading(false); // Stop loading indicator
   //   }
   // }
+  const [language, setLanguage] = useState('en'); // 'en' for English, 'ar' for Arabic
+  const [dir, setDir] = useState('ltr'); // 'en' for English, 'ar' for Arabic
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    setDir(lang === 'ar' ? "rtl" : "ltr");
+    i18n.changeLanguage(lang);
+  }
 
   return (
     <div className="App">
       {!isShowingInput && <section className='cover-page'>
         <img src={logo} alt="ELGUARDS Logo" width="400em" />
-        <Typography gutterBottom variant='h3'>Speech2Post</Typography>
+        <Typography gutterBottom variant='h3'>{t('Speech 2 Post')}</Typography>
+        <div className='cover-page-language'>
+          <Button onClick={() => handleLanguageChange("en")} sx={{
+            marginTop: '1em',
+            marginBottom: '1em',
+          }}>
+            <Box className="cover-page-language-box">
+              English
+            </Box>
+          </Button>
+          <Button onClick={() => handleLanguageChange("ar")} sx={{
+            marginTop: '1em',
+            marginBottom: '1em'
+          }}>
+            <Box className="cover-page-language-box">
+              عربي
+            </Box>
+          </Button>
+        </div>
+
         <Button
           size="small"
           variant="contained"
-          sx={{ width: "10em", height: "5em" }}
+          dir={dir}
+          sx={{ width: "10em", height: "5em", marginTop: "1em" }}
           onClick={handleButtonClick}
         >
-          Start now!
+          {t('Start Now!')}
         </Button>
       </section>}
 
-      {isShowingInput && <section className='input-page' ref={inputSectionRef}><SpeechToTextInput onSendData={handleDataFromChild} onIsLoading={handleIsLoading} onIsShowingResultCards={handleIsShowingResultCards} /></section>}
+      {isShowingInput && <section className='input-page' ref={inputSectionRef}><SpeechToTextInput lang={language} dir={dir} onSendData={handleDataFromChild} onIsLoading={handleIsLoading} onIsShowingResultCards={handleIsShowingResultCards} /></section>}
 
 
 

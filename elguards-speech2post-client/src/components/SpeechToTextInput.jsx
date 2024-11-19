@@ -1,22 +1,30 @@
 import {
   Button,
   CircularProgress,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
 import MicIcon from "@mui/icons-material/Mic";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./SpeechToTextInput.css";
 
+const locales = require("../config/locales.json");
+
 const SpeechToTextInput = ({
+  lang = "en",
   onSendData,
   onIsLoading,
   onIsShowingResultCards,
 }) => {
   const [inputText, setInputText] = useState(null);
+  const [outputText, setOutputText] = useState(null);
   const [isAcceptInput, setIsAcceptInput] = useState(true);
   const [isShowMic, setIsShowMic] = useState(true);
   const [isShowSubmit, setIsShowSubmit] = useState(false);
@@ -25,11 +33,15 @@ const SpeechToTextInput = ({
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
+  const [locale, setLocale] = useState("AE"); // 'AE' = UAE, 'SA' = KSA, 'EG' = Egypt
+  const handleLocaleChange = (event) => {
+    setLocale(event.target.value);
+  };
+
   // Function to start recording audio
   const startListening = async () => {
     setIsListening(true);
     audioChunksRef.current = [];
-
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorderRef.current = new MediaRecorder(stream);
@@ -67,25 +79,36 @@ const SpeechToTextInput = ({
 
   // Function to send audio blob to backend
   const sendAudioToBackend = async (audioBlob) => {
+    const tempLocale = `${lang}-${lang === "en" ? "US" : locale}`;
+    console.log("sending audio with locale:", tempLocale);
+
     const formData = new FormData();
     formData.append("audio", audioBlob);
 
     try {
       setIsAcceptInput(false);
       setIsLoadingTranscript(true);
-      const response = await fetch("http://localhost:3030/api/transcribe", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await axios.post(
+        "http://localhost:3030/api/transcribe",
+        formData,
+        {
+          params: {
+            lang: tempLocale,
+          },
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      const data = await response.json();
+      const data = response.data;
       setInputText(data.transcription);
     } catch (error) {
       console.error("Error transcribing audio", error);
     } finally {
       setIsLoadingTranscript(false);
-      setInputText("what we heard");
       setIsShowMic(false); //if success
+      setIsShowSubmit(true);
     }
   };
 
@@ -93,6 +116,8 @@ const SpeechToTextInput = ({
     // return;
     // setisShowingResultCards(true);
     // setisAwaitOptimizedResult(true);
+    onIsShowingResultCards(true);
+    onIsLoading(true);
     try {
       const res = await axios.post("http://localhost:3030/api/optimize", {
         content: inputText,
@@ -104,6 +129,7 @@ const SpeechToTextInput = ({
     } catch (error) {
       console.error(error);
     } finally {
+      onIsLoading(false);
       // setisAwaitOptimizedResult(false); // Stop loading indicator
     }
   };
@@ -118,26 +144,49 @@ const SpeechToTextInput = ({
       {isLoadingTranscript && <CircularProgress size={"5em"} />}
       {isAcceptInput &&
         (isShowMic ? (
-          <Tooltip
-            title={isListening ? "Stop recording" : "Start recording"}
-            placement="top"
-          >
-            <IconButton onClick={isListening ? stopListening : startListening}>
-              <MicIcon
-                sx={{
-                  color: isListening ? "red" : "#0550f0",
-                  fontSize: 200,
-                }}
-              />
-            </IconButton>
-          </Tooltip>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <Tooltip
+              title={isListening ? "Stop recording" : "Start recording"}
+              placement="top"
+            >
+              <IconButton
+                onClick={isListening ? stopListening : startListening}
+              >
+                <MicIcon
+                  sx={{
+                    color: isListening ? "red" : "#0550f0",
+                    fontSize: 200,
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+            {lang === "ar" && (
+              <FormControl variant="filled" sx={{ bgcolor: "white" }}>
+                <InputLabel id="country-select-label">Country</InputLabel>
+                <Select
+                  labelId="country-select-label"
+                  id="country-select"
+                  value={locale}
+                  label="Language"
+                  sx={{ textAlign: "left" }}
+                  onChange={handleLocaleChange}
+                >
+                  {locales.ar.map((e) => (
+                    <MenuItem key={e.abbr} value={e.abbr}>
+                      {e.icon} {e.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            )}
+          </div>
         ) : (
           <TextField
             id="input-text"
             label="Enter text here"
             multiline
             rows={10}
-            value={inputText}
+            value={inputText ? inputText : ""}
             required
             onChange={(e) => setInputText(e.target.value)}
             sx={{ width: "100%", bgcolor: "white" }}
@@ -153,25 +202,26 @@ const SpeechToTextInput = ({
           {isShowMic ? "or type it instead" : "or record it instead"}
         </Button>
       )}
-      {isShowSubmit && (
-        <Button variant="contained" onClick={submitInput}>
-          Submit
-        </Button>
-      )}
-      {inputText && (
+
+      {outputText && (
         <div style={{ width: "100%" }}>
           <Typography variant="h4">What we heard</Typography>
           <TextField
             id="input-text"
-            label="Enter text here"
+            label="What we heard"
             multiline
             rows={10}
-            value={inputText}
+            value={outputText}
             required
             onChange={(e) => setInputText(e.target.value)}
             sx={{ width: "100%", bgcolor: "white" }}
           />
         </div>
+      )}
+      {isShowSubmit && (
+        <Button variant="contained" onClick={submitInput}>
+          Submit
+        </Button>
       )}
 
       {/* <div className="input-container-button-group">

@@ -71,6 +71,7 @@ export default function SocialMediaCard({
             component="p"
             overflow={"auto"}
             height={"100%"}
+            dir="rtl"
             sx={{ color: "text.secondary" }}
           >
             {isLoading ? (

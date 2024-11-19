@@ -27,6 +27,26 @@ html {
   text-align: center;
 }
 
+.cover-page-language {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  gap: 1em;
+}
+
+.cover-page-language-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.2em solid;
+  border-radius: 4px;
+  height: 6em;
+  width: 6em;
+  font-size: 2em;
+  color: white;
+}
+
 .input-page {
   display: flex;
   flex-direction: column;
