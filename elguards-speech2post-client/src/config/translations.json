@@ -2,13 +2,29 @@
   "en": {
     "translation": {
       "Speech 2 Post": "Speech 2 Post",
-      "Start Now!": "Start Now!"
+      "Start Now!": "Start Now!",
+      "Enter text here": "Enter text here",
+      "or type it instead": "or type it instead",
+      "or record it instead": "or record it instead",
+      "What we heard": "What we heard",
+      "Lets go!": "Lets go!",
+      "Done": "Done",
+      "Edit": "Edit",
+      "Post": "Post"
     }
   },
   "ar": {
     "translation": {
       "Speech 2 Post": "صوتك ل محتواك",
-      "Start Now!": "ابدأ الآن!"
+      "Start Now!": "ابدأ الآن!",
+      "Enter text here": "أدخل النص هنا",
+      "or type it instead": "أو اكتبها",
+      "or record it instead": "أو سجلها",
+      "What we heard": "ما سمعناه",
+      "Lets go!": "هيا بنا!",
+      "Done": "تم",
+      "Edit": "صحح",
+      "Post": "انشر"
     }
   }
 }

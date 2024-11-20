@@ -1,7 +1,8 @@
 import logo from './images/ELGUARDS_LOGO-01.svg';
 import './App.css';
 import { useEffect, useRef, useState } from 'react';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, Typography, } from '@mui/material';
+import { Button, Typography, } from '@mui/material';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
 import SocialMediaCard from './components/SocialMediaCard';
 import SocialMediaCardContainer from './components/SocialMediaCardContainer';
 import SpeechToTextInput from './components/SpeechToTextInput';
@@ -85,21 +86,18 @@ function App() {
         <img src={logo} alt="ELGUARDS Logo" width="400em" />
         <Typography gutterBottom variant='h3'>{t('Speech 2 Post')}</Typography>
         <div className='cover-page-language'>
-          <Button onClick={() => handleLanguageChange("en")} sx={{
+          <Button color='secondary' className='cover-page-language-box' variant='contained' disabled={language === 'en'} onClick={() => handleLanguageChange("en")} sx={{
             marginTop: '1em',
             marginBottom: '1em',
           }}>
-            <Box className="cover-page-language-box">
-              English
-            </Box>
+            <p style={{ fontSize: "2em" }}>English</p>
           </Button>
-          <Button onClick={() => handleLanguageChange("ar")} sx={{
+          <SwapHorizIcon sx={{ fontSize: "3em" }} />
+          <Button color='secondary' className='cover-page-language-box' variant='contained' disabled={language === 'ar'} onClick={() => handleLanguageChange("ar")} sx={{
             marginTop: '1em',
-            marginBottom: '1em'
+            marginBottom: '1em',
           }}>
-            <Box className="cover-page-language-box">
-              عربي
-            </Box>
+            <p style={{ fontSize: "2em" }}>عربي</p>
           </Button>
         </div>
 
@@ -110,11 +108,11 @@ function App() {
           sx={{ width: "10em", height: "5em", marginTop: "1em" }}
           onClick={handleButtonClick}
         >
-          {t('Start Now!')}
+          <p style={{ fontSize: "1.5em" }}>{t('Start Now!')}</p>
         </Button>
       </section>}
 
-      {isShowingInput && <section className='input-page' ref={inputSectionRef}><SpeechToTextInput lang={language} dir={dir} onSendData={handleDataFromChild} onIsLoading={handleIsLoading} onIsShowingResultCards={handleIsShowingResultCards} /></section>}
+      {(!isShowingResultCards && isShowingInput) && <section className='input-page' ref={inputSectionRef}><SpeechToTextInput t={t} lang={language} dir={dir} onSendData={handleDataFromChild} onIsLoading={handleIsLoading} onIsShowingResultCards={handleIsShowingResultCards} /></section>}
 
 
 
@@ -148,21 +146,21 @@ function App() {
       {
         isShowingResultCards &&
         (isLoading || !resultData ?
-          <div style={{ width: "100%" }}>
+          <div className='cards-page'>
             <SocialMediaCardContainer>
-              <SocialMediaCard title="Facebook" isLoading={isLoading} />
-              <SocialMediaCard title="X (formerly Twitter)" isLoading={isLoading} />
-              <SocialMediaCard title="LinkedIn" isLoading={isLoading} />
-              <SocialMediaCard title="Instagram" isLoading={isLoading} />
+              <SocialMediaCard title="Facebook" isLoading={isLoading} dir={dir} t={t} />
+              <SocialMediaCard title="X (formerly Twitter)" isLoading={isLoading} dir={dir} t={t} />
+              <SocialMediaCard title="LinkedIn" isLoading={isLoading} dir={dir} t={t} />
+              <SocialMediaCard title="Instagram" isLoading={isLoading} dir={dir} t={t} />
             </SocialMediaCardContainer>
           </div>
           :
-          <div style={{ width: "100%" }}>
+          <div className='cards-page'>
             <SocialMediaCardContainer>
-              <SocialMediaCard title="Facebook" content={resultData.facebook?.content || 'No content available'} isLoading={isLoading} />
-              <SocialMediaCard title="X (formerly Twitter)" content={resultData.twitter?.content || 'No content available'} isLoading={isLoading} />
-              <SocialMediaCard title="LinkedIn" content={resultData.linkedin?.content || 'No content available'} isLoading={isLoading} />
-              <SocialMediaCard title="Instagram" content={resultData.instagram?.content || 'No content available'} isLoading={isLoading} />
+              <SocialMediaCard title="Facebook" content={resultData.facebook?.content || 'No content available'} isLoading={isLoading} dir={dir} t={t} />
+              <SocialMediaCard title="X (formerly Twitter)" content={resultData.twitter?.content || 'No content available'} isLoading={isLoading} dir={dir} t={t} />
+              <SocialMediaCard title="LinkedIn" content={resultData.linkedin?.content || 'No content available'} isLoading={isLoading} dir={dir} t={t} />
+              <SocialMediaCard title="Instagram" content={resultData.instagram?.content || 'No content available'} isLoading={isLoading} dir={dir} t={t} />
               {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
             </SocialMediaCardContainer>
           </div>)

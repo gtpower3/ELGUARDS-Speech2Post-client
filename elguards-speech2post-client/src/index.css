@@ -8,19 +8,18 @@
 }
 
 @font-face {
-  font-family: "Aeonik Light", sans-serif;
-  src: "./fonts/Aeonik/Aeonik-Light.ttf";
-}
-
-@font-face {
-  font-family: "Aeonik Medium", sans-serif;
-  src: "./fonts/Aeonik/Aeonik-Medium.ttf";
+  font-family: "Al Qabas Regular";
+  src: url("./fonts/AlQabas/AlQabas-Regular.ttf") format("embedded-opentype"),
+    url("./fonts/AlQabas/AlQabas-Regular.ttf") format("woff2"),
+    url("./fonts/AlQabas/AlQabas-Regular.ttf") format("woff"),
+    url("./fonts/AlQabas/AlQabas-Regular.ttf") format("truetype"),
+    url("./fonts/AlQabas/AlQabas-Regular.ttf") format("svg");
 }
 
 body {
-  font-family: "Aeonik Regular", -apple-system, BlinkMacSystemFont, "Segoe UI",
+  /* font-family: "Aeonik Regular", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-    "Helvetica Neue", sans-serif;
+    "Helvetica Neue", sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -36,15 +36,8 @@ html {
 }
 
 .cover-page-language-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 0.2em solid;
-  border-radius: 4px;
-  height: 6em;
-  width: 6em;
-  font-size: 2em;
-  color: white;
+  height: 8em;
+  width: 12em;
 }
 
 .input-page {
@@ -56,6 +49,19 @@ html {
   background-color: #e0e0e0;
   color: #333;
   text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.cards-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Full height of the viewport */
+  background-color: #aaa7d0;
+  color: #333;
+  text-align: center;
+  padding: 1em 0;
   animation: fadeIn 1s ease-in-out;
 }
 

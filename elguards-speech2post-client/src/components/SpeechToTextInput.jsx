@@ -14,11 +14,14 @@ import MicIcon from "@mui/icons-material/Mic";
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "./SpeechToTextInput.css";
+import MicVolumeIndicator from "./MicVolumeIndicator";
 
 const locales = require("../config/locales.json");
 
 const SpeechToTextInput = ({
+  t,
   lang = "en",
+  dir,
   onSendData,
   onIsLoading,
   onIsShowingResultCards,
@@ -29,6 +32,9 @@ const SpeechToTextInput = ({
   const [isShowMic, setIsShowMic] = useState(true);
   const [isShowSubmit, setIsShowSubmit] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const toggleListening = () => {
+    setIsListening((prev) => !prev);
+  };
   const [isLoadingTranscript, setIsLoadingTranscript] = useState(false);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
@@ -102,9 +108,13 @@ const SpeechToTextInput = ({
       );
 
       const data = response.data;
+      if (!data.transcription) throw new Error("Empty response");
       setInputText(data.transcription);
+      setOutputText(data.transcription);
     } catch (error) {
-      console.error("Error transcribing audio", error);
+      console.error("Error transcribing audio:", error.message);
+      setIsAcceptInput(true);
+      setIsLoadingTranscript(false);
     } finally {
       setIsLoadingTranscript(false);
       setIsShowMic(false); //if success
@@ -116,12 +126,17 @@ const SpeechToTextInput = ({
     // return;
     // setisShowingResultCards(true);
     // setisAwaitOptimizedResult(true);
+    if (!inputText) return;
     onIsShowingResultCards(true);
     onIsLoading(true);
     try {
-      const res = await axios.post("http://localhost:3030/api/optimize", {
-        content: inputText,
-      });
+      const res = await axios.post(
+        "http://localhost:3030/api/optimize",
+        {
+          content: inputText,
+        },
+        { params: { lang: lang } }
+      );
       console.log(res.status === 200 ? "Success!" : "Failed");
       const resObj = res.data;
       onSendData(resObj);
@@ -151,29 +166,38 @@ const SpeechToTextInput = ({
             >
               <IconButton
                 onClick={isListening ? stopListening : startListening}
+                // onClick={toggleListening}
               >
-                <MicIcon
-                  sx={{
-                    color: isListening ? "red" : "#0550f0",
-                    fontSize: 200,
-                  }}
-                />
+                <MicVolumeIndicator isListening={isListening}>
+                  <MicIcon
+                    sx={{
+                      color: !isListening && "#0550f0",
+                      fontSize: 200,
+                    }}
+                  />
+                </MicVolumeIndicator>
               </IconButton>
             </Tooltip>
+
             {lang === "ar" && (
               <FormControl variant="filled" sx={{ bgcolor: "white" }}>
-                <InputLabel id="country-select-label">Country</InputLabel>
+                <InputLabel
+                  id="country-select-label"
+                  sx={{ direction: "rtl", textAlign: "right" }}
+                >
+                  الموقع
+                </InputLabel>
                 <Select
                   labelId="country-select-label"
                   id="country-select"
                   value={locale}
-                  label="Language"
-                  sx={{ textAlign: "left" }}
+                  dir="rtl"
+                  sx={{ textAlign: "right" }}
                   onChange={handleLocaleChange}
                 >
                   {locales.ar.map((e) => (
-                    <MenuItem key={e.abbr} value={e.abbr}>
-                      {e.icon} {e.name}
+                    <MenuItem dir="rtl" key={e.abbr} value={e.abbr}>
+                      {e.icon} {e.nameAR}
                     </MenuItem>
                   ))}
                 </Select>
@@ -183,13 +207,17 @@ const SpeechToTextInput = ({
         ) : (
           <TextField
             id="input-text"
-            label="Enter text here"
+            placeholder={t("Enter text here")}
             multiline
             rows={10}
             value={inputText ? inputText : ""}
             required
+            fullWidth
             onChange={(e) => setInputText(e.target.value)}
-            sx={{ width: "100%", bgcolor: "white" }}
+            sx={{
+              bgcolor: "white",
+              direction: dir,
+            }}
           />
         ))}
       {isAcceptInput && (
@@ -199,28 +227,44 @@ const SpeechToTextInput = ({
           onClick={handleShowMic}
           sx={{ color: "#3E4DA1" }}
         >
-          {isShowMic ? "or type it instead" : "or record it instead"}
+          <p style={{ fontSize: "1.2em" }}>
+            {isShowMic ? t("or type it instead") : t("or record it instead")}
+          </p>
         </Button>
       )}
 
       {outputText && (
         <div style={{ width: "100%" }}>
-          <Typography variant="h4">What we heard</Typography>
+          <Typography variant="h4">{t("What we heard")}</Typography>
           <TextField
-            id="input-text"
-            label="What we heard"
+            id="output-text"
+            placeholder={t("What we heard")}
             multiline
             rows={10}
-            value={outputText}
+            value={inputText}
             required
+            fullWidth
             onChange={(e) => setInputText(e.target.value)}
-            sx={{ width: "100%", bgcolor: "white" }}
+            sx={{ bgcolor: "white", direction: dir }}
           />
+          <Button
+            size="small"
+            disabled={isListening || isLoadingTranscript}
+            onClick={handleShowMic}
+            sx={{ color: "#3E4DA1" }}
+          >
+            {isShowMic ? t("or type it instead") : t("or record it instead")}
+          </Button>
         </div>
       )}
       {isShowSubmit && (
-        <Button variant="contained" onClick={submitInput}>
-          Submit
+        <Button
+          variant="contained"
+          dir={dir}
+          onClick={submitInput}
+          sx={{ width: "8em" }}
+        >
+          <p style={{ fontSize: "1.5em" }}>{t("Lets go!")}</p>
         </Button>
       )}
 

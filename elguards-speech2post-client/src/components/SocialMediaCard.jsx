@@ -16,6 +16,8 @@ export default function SocialMediaCard({
   title = "",
   content = "",
   isLoading = true,
+  dir = "ltr",
+  t,
 }) {
   const [isEditing, setIsEditing] = useState(false);
   const [cardContent, setCardContent] = useState(content);
@@ -48,7 +50,8 @@ export default function SocialMediaCard({
         height: "25em",
         display: "flex",
         flexDirection: "column",
-        textAlign: "left",
+        direction: dir,
+        textAlign: dir === "rtl" ? "right" : "left",
       }}
     >
       <CardContent sx={{ height: "70%" }}>
@@ -91,9 +94,9 @@ export default function SocialMediaCard({
           {isLoading ? (
             <Skeleton width={"100%"} />
           ) : isEditing ? (
-            "Done"
+            t("Done")
           ) : (
-            "Edit"
+            t("Edit")
           )}
         </Button>
         <Button
@@ -101,7 +104,7 @@ export default function SocialMediaCard({
           variant="contained"
           disabled={isLoading || isEditing ? true : false}
         >
-          {isLoading ? <Skeleton width={"100%"} /> : "Post"}
+          {isLoading ? <Skeleton width={"100%"} /> : t("Post")}
         </Button>
       </CardActions>
     </Card>

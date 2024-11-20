@@ -8,7 +8,7 @@ import './i18n';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const theme = createTheme({
+const themeEN = createTheme({
   palette: {
     text: {
       primary: "#1a1833",
@@ -24,8 +24,26 @@ const theme = createTheme({
     fontFamily: "Aeonik Regular",
   },
 });
+
+const themeAR = createTheme({
+  palette: {
+    text: {
+      primary: "#1a1833",
+    },
+    primary: {
+      main: "#0550F0",
+    },
+    secondary: {
+      main: "#aaa7D0",
+      contrastText: "#fff"
+    }
+  },
+  typography: {
+    fontFamily: "Al Qabas Regular",
+  },
+});
 root.render(
-  <ThemeProvider theme={theme}>
+  <ThemeProvider theme={themeAR}>
     <React.StrictMode>
       <App />
     </React.StrictMode>
