@@ -7,6 +7,7 @@ import SocialMediaCard from './components/SocialMediaCard';
 import SocialMediaCardContainer from './components/SocialMediaCardContainer';
 import SpeechToTextInput from './components/SpeechToTextInput';
 import { useTranslation } from 'react-i18next';
+import TopicPicker from './components/TopicPicker';
 
 const msgObj = {
   facebook: { content: "🚨 Stay vigilant! 🚨 Attackers are using social engineering techniques to commit various types of fraud, including phone, credit card, finance, and government document fraud. Protect your identity and personal information! #CyberSecurity #FraudPrevention" },
@@ -25,6 +26,7 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
   const handleIsLoading = (isLoading) => {
+    handlePageNum(3);
     setIsLoading(isLoading);
   }
 
@@ -33,9 +35,25 @@ function App() {
     setIsShowingInput(true);
   }
 
-  const [isShowingResultCards, setIsShowingResultCards] = useState(false);
   const handleIsShowingResultCards = (isShowingResultCards) => {
-    setIsShowingResultCards(isShowingResultCards);
+    if (isShowingResultCards) setPageNum(3);
+  }
+
+  const [isShowingTopicSelects, setIsShowingTopicSelects] = useState(false);
+  const handleIsShowingTopicSelects = (isShowingTopicSelects) => {
+    setIsShowingTopicSelects(isShowingTopicSelects);
+  }
+
+  const [pageNum, setPageNum] = useState(0); //0 = welcome, language select | 1 = pick topic / input topic | 2 = (if input topic) input/record topic | 3 = result cards
+  const handlePageNum = (num) => {
+    setLastPageNum(pageNum);
+    setPageNum(num);
+  }
+  const [lastPageNum, setLastPageNum] = useState(0);
+  const previousPage = () => {
+    const tmp = pageNum;
+    setPageNum(lastPageNum);
+    setLastPageNum(tmp);
   }
 
   // Reference to the input section for scrolling
@@ -43,7 +61,8 @@ function App() {
 
   // Handle button click
   const handleButtonClick = () => {
-    setIsShowingInput(true); // Show the input section when the button is clicked
+    handlePageNum(1);
+    // setIsShowingInput(true); // Show the input section when the button is clicked
   };
 
   // Scroll to the input section if it's visible
@@ -82,7 +101,7 @@ function App() {
 
   return (
     <div className="App">
-      {!isShowingInput && <section className='cover-page'>
+      {pageNum === 0 && <section className='cover-page'>
         <img src={logo} alt="ELGUARDS Logo" width="400em" />
         <Typography gutterBottom variant='h3'>{t('Speech 2 Post')}</Typography>
         <div className='cover-page-language'>
@@ -110,9 +129,13 @@ function App() {
         >
           <p style={{ fontSize: "1.5em" }}>{t('Start Now!')}</p>
         </Button>
-      </section>}
+      </section>
+      }
 
-      {(!isShowingResultCards && isShowingInput) && <section className='input-page' ref={inputSectionRef}><SpeechToTextInput t={t} lang={language} dir={dir} onSendData={handleDataFromChild} onIsLoading={handleIsLoading} onIsShowingResultCards={handleIsShowingResultCards} /></section>}
+
+      {pageNum === 1 && <section className='selects-page'><Button onClick={previousPage}>Back</Button><TopicPicker onSendData={handleDataFromChild} onIsLoading={handleIsLoading} /></section>}
+
+      {pageNum === 2 && <section className='input-page' ref={inputSectionRef}><Button onClick={previousPage}>Back</Button><SpeechToTextInput t={t} lang={language} dir={dir} onSendData={handleDataFromChild} onIsLoading={handleIsLoading} onIsShowingResultCards={handleIsShowingResultCards} /></section>}
 
 
 
@@ -143,8 +166,9 @@ function App() {
         //       {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
         //     </SocialMediaCardContainer>)
       }
+
       {
-        isShowingResultCards &&
+        pageNum === 3 &&
         (isLoading || !resultData ?
           <div className='cards-page'>
             <SocialMediaCardContainer>
@@ -156,6 +180,7 @@ function App() {
           </div>
           :
           <div className='cards-page'>
+            <Button onClick={previousPage}>Back</Button>
             <SocialMediaCardContainer>
               <SocialMediaCard title="Facebook" content={resultData.facebook?.content || 'No content available'} isLoading={isLoading} dir={dir} t={t} />
               <SocialMediaCard title="X (formerly Twitter)" content={resultData.twitter?.content || 'No content available'} isLoading={isLoading} dir={dir} t={t} />

@@ -1,0 +1,701 @@
+{
+  "data": [
+    {
+      "title": "Technology",
+      "topics": [
+        {
+          "title": "Artificial Intelligence",
+          "subtopics": [
+            "Machine Learning Applications",
+            "Natural Language Processing (NLP)",
+            "AI Ethics and Bias",
+            "AI in Education and Work"
+          ]
+        },
+        {
+          "title": "Cybersecurity",
+          "subtopics": [
+            "Protecting Personal Data",
+            "Natural Language Processing (NLP)",
+            "Ethical Hacking Techniques",
+            "Cyber Threat Awareness",
+            "Security Best Practices"
+          ]
+        },
+        {
+          "title": "Gadgets and Devices",
+          "subtopics": [
+            "Latest Smartphone Features",
+            "Smart Home Devices",
+            "Wearable Technology Trends",
+            "Gaming Consoles Reviews"
+          ]
+        },
+        {
+          "title": "Software Development",
+          "subtopics": [
+            "Popular Programming Languages",
+            "Agile and DevOps Practices",
+            "Cloud Computing Trends",
+            "Open-Source Software"
+          ]
+        },
+        {
+          "title": "Tech Innovations",
+          "subtopics": [
+            "Quantum Computing",
+            "Web3 and Blockchain",
+            "Internet of Things (IoT)",
+            "Robotics and Automation"
+          ]
+        },
+        {
+          "title": "Data Centers and Servers",
+          "subtopics": [
+            "Data Center Design and Management",
+            "Server Virtualization",
+            "Cooling and Energy Efficiency in Data Centers",
+            "Cloud vs. On-Premises Servers",
+            "Backup and Disaster Recovery Solutions"
+          ]
+        },
+        {
+          "title": "Passive Infrastructure",
+          "subtopics": [
+            "Structured Cabling Systems",
+            "Fiber Optic Technology",
+            "Power Distribution and UPS Systems",
+            "Data Center Racks and Enclosures",
+            "Environmental Monitoring for IT Infrastructure"
+          ]
+        },
+        {
+          "title": "Digital Signage",
+          "subtopics": [
+            "Trends in Digital Displays",
+            "Interactive Touchscreens",
+            "Digital Signage for Retail and Advertising",
+            "Content Management for Digital Signage",
+            "Integration of IoT in Digital Signage"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Health & Wellness",
+      "topics": [
+        {
+          "title": "Physical Health",
+          "subtopics": [
+            "Exercise Routines",
+            "Healthy Eating Habits",
+            "Benefits of Sports",
+            "Fitness Gadgets"
+          ]
+        },
+        {
+          "title": "Mental Health",
+          "subtopics": [
+            "Meditation and Mindfulness",
+            "Coping with Anxiety",
+            "Stress Management Techniques",
+            "Importance of Therapy"
+          ]
+        },
+        {
+          "title": "Wellness Trends",
+          "subtopics": [
+            "Holistic Wellness Practices",
+            "Plant-Based Diets",
+            "Yoga Practices",
+            "Self-Care Routines"
+          ]
+        },
+        {
+          "title": "Healthcare Innovations",
+          "subtopics": [
+            "Telemedicine Benefits",
+            "Advancements in Surgery",
+            "Wearable Health Devices",
+            "Cutting-Edge Medical Research"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Business & Entrepreneurship",
+      "topics": [
+        {
+          "title": "Startups",
+          "subtopics": [
+            "Business Models and Strategies",
+            "Pitch Deck Preparation",
+            "Startup Incubators and Accelerators",
+            "Lessons from Failed Startups"
+          ]
+        },
+        {
+          "title": "Corporate Trends",
+          "subtopics": [
+            "Business Process Optimization",
+            "Digital Transformation in Businesses",
+            "Employee Retention Strategies",
+            "Future of Work and Automation"
+          ]
+        },
+        {
+          "title": "International Business",
+          "subtopics": [
+            "Global Markets and Trade",
+            "Import-Export Strategies",
+            "Currency Exchange and Impacts",
+            "Multinational Corporation Trends"
+          ]
+        },
+        {
+          "title": "Business Analytics",
+          "subtopics": [
+            "Data-Driven Decision Making",
+            "Key Business Metrics (KPIs)",
+            "Market Analysis Tools",
+            "Predictive Analytics in Business"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Education & Personal Development",
+      "topics": [
+        {
+          "title": "Learning Strategies",
+          "subtopics": [
+            "Effective Study Habits",
+            "Using Online Learning Tools",
+            "Memory Retention Tips",
+            "Taking Notes Efficiently"
+          ]
+        },
+        {
+          "title": "Career Advancement",
+          "subtopics": [
+            "Networking Strategies",
+            "Career Pivoting",
+            "Leadership Development",
+            "Job Hunting Tips"
+          ]
+        },
+        {
+          "title": "Personal Growth",
+          "subtopics": [
+            "Overcoming Procrastination",
+            "Setting SMART Goals",
+            "Building Resilience",
+            "Emotional Intelligence"
+          ]
+        },
+        {
+          "title": "Hobbies",
+          "subtopics": [
+            "Photography Basics",
+            "Creative Writing",
+            "DIY Projects",
+            "Learning New Languages"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Lifestyle",
+      "topics": [
+        {
+          "title": "Travel",
+          "subtopics": [
+            "Popular Travel Destinations",
+            "Travel Budgeting Tips",
+            "Local Culture Experiences",
+            "Adventure Travel Ideas"
+          ]
+        },
+        {
+          "title": "Fashion",
+          "subtopics": [
+            "Dressing for Success",
+            "Sustainable Fashion Brands",
+            "Seasonal Trends",
+            "Celebrity Style Inspiration"
+          ]
+        },
+        {
+          "title": "Food",
+          "subtopics": [
+            "Easy Recipes",
+            "Restaurant Reviews",
+            "Healthy Snacking",
+            "Food Photography Tips"
+          ]
+        },
+        {
+          "title": "Home & Living",
+          "subtopics": [
+            "Interior Design Trends",
+            "Gardening Tips",
+            "Home Improvement Projects",
+            "Organizing Your Space"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Environment & Sustainability",
+      "topics": [
+        {
+          "title": "Climate Action",
+          "subtopics": [
+            "Fighting Climate Change",
+            "Carbon Neutrality",
+            "Renewable Energy Sources",
+            "Advocacy for Green Policies"
+          ]
+        },
+        {
+          "title": "Eco-Friendly Living",
+          "subtopics": [
+            "Sustainable Lifestyle Tips",
+            "Recycling Best Practices",
+            "DIY Zero Waste Projects",
+            "Eco-Friendly Products"
+          ]
+        },
+        {
+          "title": "Wildlife Conservation",
+          "subtopics": [
+            "Protecting Endangered Species",
+            "National Park Highlights",
+            "Importance of Biodiversity",
+            "Ocean Conservation"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Social Issues",
+      "topics": [
+        {
+          "title": "Community Engagement",
+          "subtopics": [
+            "Volunteering Tips",
+            "Neighborhood Initiatives",
+            "Fundraising Strategies",
+            "Recognizing Local Heroes"
+          ]
+        },
+        {
+          "title": "Global Challenges",
+          "subtopics": [
+            "Poverty Eradication",
+            "Access to Education",
+            "Water Scarcity Solutions",
+            "Healthcare Access for All"
+          ]
+        },
+        {
+          "title": "Wildlife Conservation",
+          "subtopics": [
+            "Protecting Endangered Species",
+            "National Park Highlights",
+            "Importance of Biodiversity",
+            "Ocean Conservation"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Science & Innovation",
+      "topics": [
+        {
+          "title": "Space Exploration",
+          "subtopics": [
+            "Mars Missions",
+            "Space Tourism",
+            "Astronomy for Beginners",
+            "NASA Discoveries"
+          ]
+        },
+        {
+          "title": "Biology & Medicine",
+          "subtopics": [
+            "Human Genome Studies",
+            "Advances in Biotechnology",
+            "Vaccine Development",
+            "Neuroscience Discoveries"
+          ]
+        },
+        {
+          "title": "Physics & Chemistry",
+          "subtopics": [
+            "Understanding Quantum Physics",
+            "Chemical Innovations",
+            "The Future of Energy",
+            "Materials Science Advances"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Fun & Entertainment",
+      "topics": [
+        {
+          "title": "Humor",
+          "subtopics": [
+            "Memes and Trends",
+            "Jokes and Puns",
+            "Social Media Humor",
+            "Lighthearted Stories"
+          ]
+        },
+        {
+          "title": "Interactive Content",
+          "subtopics": [
+            "Fun Quizzes",
+            "Personality Tests",
+            "Polls and Surveys",
+            "Challenges"
+          ]
+        },
+        {
+          "title": "DIY Projects",
+          "subtopics": [
+            "Craft Ideas",
+            "Upcycling Inspiration",
+            "Holiday-Themed Projects",
+            "Home Hacks"
+          ]
+        },
+        {
+          "title": "Movies & TV",
+          "subtopics": [
+            "Must-Watch Films",
+            "Behind-the-Scenes Stories",
+            "Upcoming Releases",
+            "Streaming Services Reviews"
+          ]
+        },
+        {
+          "title": "Music",
+          "subtopics": [
+            "Artist Spotlights",
+            "Music Genres Explained",
+            "Creating Playlists",
+            "Music Production Basics"
+          ]
+        },
+        {
+          "title": "Gaming",
+          "subtopics": [
+            "Game Reviews",
+            "Latest Gaming Trends",
+            "Virtual Reality Games",
+            "eSports Updates"
+          ]
+        },
+        {
+          "title": "Books",
+          "subtopics": [
+            "Bestselling Novels",
+            "Self-Help Books",
+            "Author Interviews",
+            "Book Clubs"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sales and Marketing",
+      "topics": [
+        {
+          "title": "Sales Techniques",
+          "subtopics": [
+            "Building Customer Relationships",
+            "Consultative Selling",
+            "Negotiation Tactics",
+            "Sales Pipeline Management"
+          ]
+        },
+        {
+          "title": "Digital Marketing",
+          "subtopics": [
+            "SEO and SEM Strategies",
+            "Social Media Marketing Hacks",
+            "Influencer Marketing",
+            "Email Campaign Optimization"
+          ]
+        },
+        {
+          "title": "Content Marketing",
+          "subtopics": [
+            "Storytelling for Brands",
+            "Content Creation Tools",
+            "Blogging Best Practices",
+            "Video Marketing Trends"
+          ]
+        },
+        {
+          "title": "Customer Relationship Management (CRM)",
+          "subtopics": [
+            "Using CRM Software Effectively",
+            "Retaining Loyal Customers",
+            "Personalization in Sales",
+            "Customer Journey Mapping"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Engineering",
+      "topics": [
+        {
+          "title": "Mechanical Engineering",
+          "subtopics": [
+            "Robotics and Automation",
+            "CAD and Simulation Tools",
+            "Renewable Energy Engineering",
+            "Advanced Manufacturing Techniques"
+          ]
+        },
+        {
+          "title": "Civil Engineering",
+          "subtopics": [
+            "Smart Cities and Infrastructure",
+            "Green Building Practices",
+            "Sustainable Construction Materials",
+            "Transportation Systems Engineering"
+          ]
+        },
+        {
+          "title": "Electrical and Electronics Engineering",
+          "subtopics": [
+            "Power Systems and Smart Grids",
+            "Embedded Systems Development",
+            "Internet of Things (IoT) Applications",
+            "Circuit Design and Testing"
+          ]
+        },
+        {
+          "title": "Software and Systems Engineering",
+          "subtopics": [
+            "Systems Architecture Design",
+            "Software Project Management",
+            "Agile Methodologies",
+            "Testing and Quality Assurance"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Finance",
+      "topics": [
+        {
+          "title": "Personal Finance",
+          "subtopics": [
+            "Budgeting for Beginners",
+            "Retirement Planning",
+            "Understanding Credit Scores",
+            "Debt Management Tips"
+          ]
+        },
+        {
+          "title": "Investment",
+          "subtopics": [
+            "Basics of Stock Market Investing",
+            "Real Estate Investments",
+            "Cryptocurrency Trends",
+            "Portfolio Diversification"
+          ]
+        },
+        {
+          "title": "Corporate Finance",
+          "subtopics": [
+            "Understanding Balance Sheets",
+            "Financial Risk Management",
+            "Mergers and Acquisitions",
+            "Business Valuation Techniques"
+          ]
+        },
+        {
+          "title": "FinTech",
+          "subtopics": [
+            "Mobile Payment Trends",
+            "Blockchain in Finance",
+            "Peer-to-Peer Lending Platforms",
+            "Digital Banking Innovations"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Law",
+      "topics": [
+        {
+          "title": "Corporate Law",
+          "subtopics": [
+            "Business Contracts Essentials",
+            "Intellectual Property Rights",
+            "Understanding Compliance",
+            "Navigating Legal Risks"
+          ]
+        },
+        {
+          "title": "Cyber Law",
+          "subtopics": [
+            "Data Privacy Regulations",
+            "Legal Aspects of Cybersecurity",
+            "Protecting Online Intellectual Property",
+            "Laws Governing Social Media Use"
+          ]
+        },
+        {
+          "title": "Personal Law",
+          "subtopics": [
+            "Wills and Estate Planning",
+            "Family Law Basics",
+            "Consumer Rights",
+            "Land and Property Law"
+          ]
+        },
+        {
+          "title": "International Law",
+          "subtopics": [
+            "Cross-Border Trade Regulations",
+            "Human Rights Advocacy",
+            "International Arbitration",
+            "Global Treaties and Agreements"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Leadership",
+      "topics": [
+        {
+          "title": "Leadership Styles",
+          "subtopics": [
+            "Transformational Leadership",
+            "Servant Leadership",
+            "Situational Leadership",
+            "Coaching Leadership"
+          ]
+        },
+        {
+          "title": "Building Teams",
+          "subtopics": [
+            "Conflict Resolution in Teams",
+            "Motivating Employees",
+            "Delegation Skills",
+            "Managing Remote Teams"
+          ]
+        },
+        {
+          "title": "Executive Presence",
+          "subtopics": [
+            "Public Speaking Tips",
+            "Decision-Making Strategies",
+            "Networking as a Leader",
+            "Personal Branding for Leaders"
+          ]
+        },
+        {
+          "title": "Change Management",
+          "subtopics": [
+            "Leading Organizational Change",
+            "Navigating Uncertainty",
+            "Employee Buy-In Strategies",
+            "Adapting to Market Shifts"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Real Estate",
+      "topics": [
+        {
+          "title": "Residential Real Estate",
+          "subtopics": [
+            "Buying Your First Home",
+            "Home Renovation Trends",
+            "Rental Property Investments",
+            "Mortgage Tips and Tricks"
+          ]
+        },
+        {
+          "title": "Commercial Real Estate",
+          "subtopics": [
+            "Office Space Design Trends",
+            "Real Estate Market Analysis",
+            "Leasing Strategies",
+            "Real Estate and Technology"
+          ]
+        },
+        {
+          "title": "Sustainable Real Estate",
+          "subtopics": [
+            "Green Building Certification",
+            "Solar Energy in Real Estate",
+            "Eco-Friendly Housing Trends",
+            "Smart Homes for Sustainability"
+          ]
+        },
+        {
+          "title": "Real Estate Development",
+          "subtopics": [
+            "Urban Development Planning",
+            "Real Estate Laws and Regulations",
+            "Property Valuation Techniques",
+            "Managing Real Estate Projects"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Agriculture",
+      "topics": [
+        {
+          "title": "Sustainable Agriculture",
+          "subtopics": [
+            "Organic Farming Techniques",
+            "Water Conservation Practices",
+            "Agroforestry Benefits",
+            "Carbon Farming Opportunities"
+          ]
+        },
+        {
+          "title": "Modern Farming Technologies",
+          "subtopics": [
+            "Precision Agriculture",
+            "Real Estate Market Analysis",
+            "Drone Use in Agriculture",
+            "IoT in Farm Management",
+            "AI for Crop Health Monitoring"
+          ]
+        },
+        {
+          "title": "Livestock Management",
+          "subtopics": [
+            "Sustainable Animal Farming",
+            "Disease Prevention in Livestock",
+            "Innovative Feed Solutions",
+            "Dairy Farming Technologies"
+          ]
+        },
+        {
+          "title": "Global Agricultural Trends",
+          "subtopics": [
+            "Food Security Challenges",
+            "Exporting Agricultural Products",
+            "Urban Agriculture (Vertical Farming)",
+            "Climate Change Impact on Farming"
+          ]
+        }
+      ]
+    }
+  ]
+}

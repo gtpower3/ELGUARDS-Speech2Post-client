@@ -69,7 +69,7 @@ const MicVolumeIndicator = ({ isListening, children }) => {
   return (
     <div
       style={{
-        color: `rgba(0, 255, 0, ${volume})`, // Adjust opacity based on volume
+        color: `rgba(62, 77, 161, ${volume})`, // Adjust opacity based on volume
         transition: "background-color 0.1s ease-in-out",
       }}
     >

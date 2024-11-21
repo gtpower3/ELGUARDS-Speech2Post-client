@@ -57,8 +57,21 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%; /* Full height of the viewport */
+  height: 100vh; /* Full height of the viewport */
   background-color: #aaa7d0;
+  color: #333;
+  text-align: center;
+  padding: 1em 0;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.selects-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full height of the viewport */
+  background-color: #3e4da1;
   color: #333;
   text-align: center;
   padding: 1em 0;
