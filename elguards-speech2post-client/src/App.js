@@ -9,6 +9,7 @@ import SpeechToTextInput from './components/SpeechToTextInput';
 import { useTranslation } from 'react-i18next';
 import TopicPicker from './components/TopicPicker';
 
+// HARDCODED RESULTS - FOR TESTING ONLY
 const msgObj = {
   facebook: { content: "🚨 Stay vigilant! 🚨 Attackers are using social engineering techniques to commit various types of fraud, including phone, credit card, finance, and government document fraud. Protect your identity and personal information! #CyberSecurity #FraudPrevention" },
   instagram: { content: "🚨 Protect Yourself from Fraud! 🚨 Attackers exploit social engineering to commit various types of fraud. Keep your information safe and stay vigilant! 💪🔒 #FraudPrevention #CyberSecurity" },
@@ -59,10 +60,13 @@ function App() {
   // Reference to the input section for scrolling
   const inputSectionRef = useRef(null);
 
-  // Handle button click
-  const handleButtonClick = () => {
+
+  const handleStartNowBtn = () => {
+    handlePageNum(2);
+  };
+
+  const handlePickTopicBtn = () => {
     handlePageNum(1);
-    // setIsShowingInput(true); // Show the input section when the button is clicked
   };
 
   // Scroll to the input section if it's visible
@@ -72,25 +76,6 @@ function App() {
     }
   }, [isShowingInput]);
 
-
-
-  // const submitVoiceData = async (text) => {
-  //   // return;
-  //   setisShowingResultCards(true);
-  //   setIsLoading(true);
-  //   try {
-  //     const res = await axios.post('http://localhost:3030/api/optimize', { content: text });
-  //     console.log(res.status === 200 ? "Success!" : "Failed");
-  //     const resObj = res.data;
-  //     setResultData(resObj);
-  //     console.log(resObj)
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  //   finally {
-  //     setIsLoading(false); // Stop loading indicator
-  //   }
-  // }
   const [language, setLanguage] = useState('en'); // 'en' for English, 'ar' for Arabic
   const [dir, setDir] = useState('ltr'); // 'en' for English, 'ar' for Arabic
   const handleLanguageChange = (lang) => {
@@ -119,56 +104,35 @@ function App() {
             <p style={{ fontSize: "2em" }}>عربي</p>
           </Button>
         </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%", marginTop: "1em" }}>
+          <Button
+            size="small"
+            variant="contained"
+            dir={dir}
+            sx={{ width: "10em", height: "5em", }}
+            onClick={handleStartNowBtn}
+          >
+            <p style={{ fontSize: "1.5em" }}>{t('Start Now!')}</p>
+          </Button>
+          <Button
+            size="small"
+            variant='text'
+            dir={dir}
+            sx={{ width: "10em", height: "5em", }}
+            onClick={handlePickTopicBtn}
+          >
+            <p style={{ fontSize: "1em" }}>{t('I prefer to pick a topic')}</p>
+          </Button>
+        </div>
 
-        <Button
-          size="small"
-          variant="contained"
-          dir={dir}
-          sx={{ width: "10em", height: "5em", marginTop: "1em" }}
-          onClick={handleButtonClick}
-        >
-          <p style={{ fontSize: "1.5em" }}>{t('Start Now!')}</p>
-        </Button>
       </section>
       }
-
 
       {pageNum === 1 && <section className='selects-page'><Button onClick={previousPage}>Back</Button><TopicPicker onSendData={handleDataFromChild} onIsLoading={handleIsLoading} /></section>}
 
       {pageNum === 2 && <section className='input-page' ref={inputSectionRef}><Button onClick={previousPage}>Back</Button><SpeechToTextInput t={t} lang={language} dir={dir} onSendData={handleDataFromChild} onIsLoading={handleIsLoading} onIsShowingResultCards={handleIsShowingResultCards} /></section>}
 
-
-
-      {/* <pre>{msgObj.facebook.content}</pre>
-      <pre>{msgObj.twitter.content}</pre>
-      <pre>{msgObj.linkedin.content}</pre>
-      <pre>{msgObj.instagram.content}</pre>
-      <pre>{msgObj.suggestedImageContent}</pre> */}
-      {/* <SocialMediaCardContainer>
-        <SocialMediaCard title="Facebook" content={msgObj.facebook.content} isLoading={false} />
-        <SocialMediaCard title="X (formerly Twitter)" content={msgObj.twitter.content} isLoading={false} />
-        <SocialMediaCard title="LinkedIn" content={msgObj.linkedin.content} isLoading={false} />
-        <SocialMediaCard title="Instagram" content={msgObj.instagram.content} isLoading={false} />
-      </SocialMediaCardContainer> */}
-      {
-        // (!resultData ? <SocialMediaCardContainer>
-        //     <SocialMediaCard title="Facebook" isLoading={isLoading} />
-        //     <SocialMediaCard title="X (formerly Twitter)" isLoading={isLoading} />
-        //     <SocialMediaCard title="LinkedIn" isLoading={isLoading} />
-        //     <SocialMediaCard title="Instagram" isLoading={isLoading} />
-        //   </SocialMediaCardContainer>
-        //     :
-        //     <SocialMediaCardContainer>
-        //       <SocialMediaCard title="Facebook" content={resultData.facebook?.content || 'No content available'} isLoading={isLoading} />
-        //       <SocialMediaCard title="X (formerly Twitter)" content={resultData.twitter?.content || 'No content available'} isLoading={isLoading} />
-        //       <SocialMediaCard title="LinkedIn" content={resultData.linkedin?.content || 'No content available'} isLoading={isLoading} />
-        //       <SocialMediaCard title="Instagram" content={resultData.instagram?.content || 'No content available'} isLoading={isLoading} />
-        //       {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
-        //     </SocialMediaCardContainer>)
-      }
-
-      {
-        pageNum === 3 &&
+      {pageNum === 3 &&
         (isLoading || !resultData ?
           <div className='cards-page'>
             <SocialMediaCardContainer>
@@ -188,8 +152,7 @@ function App() {
               <SocialMediaCard title="Instagram" content={resultData.instagram?.content || 'No content available'} isLoading={isLoading} dir={dir} t={t} />
               {/* <pre>{JSON.stringify(optimizedResult, null, 2)}</pre> */}
             </SocialMediaCardContainer>
-          </div>)
-      }
+          </div>)}
     </div>
   );
 }

@@ -1,3 +1,10 @@
+:root {
+  --coverpage-bgcolor: #1a1833;
+  --input-page-bgcolor: #e0e0e0;
+  --cards-page-bgcolor: #aaa7d0;
+  --select-page-bgcolor: #3e4da1;
+}
+
 body,
 html {
   margin: 0;
@@ -22,7 +29,7 @@ html {
   justify-content: center;
   align-items: center;
   height: 100vh; /* Full height of the viewport */
-  background-color: #1a1833;
+  background-color: var(--coverpage-bgcolor);
   color: white;
   text-align: center;
 }
@@ -46,10 +53,10 @@ html {
   justify-content: center;
   align-items: center;
   height: 100vh; /* Full height of the viewport */
-  background-color: #e0e0e0;
+  background-color: var(--input-page-bgcolor);
   color: #333;
   text-align: center;
-  animation: fadeIn 1s ease-in-out;
+  animation: coverToInput 1s ease-in-out;
 }
 
 .cards-page {
@@ -58,7 +65,7 @@ html {
   justify-content: center;
   align-items: center;
   height: 100vh; /* Full height of the viewport */
-  background-color: #aaa7d0;
+  background-color: var(--cards-page-bgcolor);
   color: #333;
   text-align: center;
   padding: 1em 0;
@@ -71,11 +78,11 @@ html {
   justify-content: center;
   align-items: center;
   height: 100vh; /* Full height of the viewport */
-  background-color: #3e4da1;
+  background-color: var(--select-page-bgcolor);
   color: #333;
   text-align: center;
   padding: 1em 0;
-  animation: fadeIn 1s ease-in-out;
+  animation: coverToSelect 1s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -84,5 +91,23 @@ html {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes coverToSelect {
+  from {
+    background-color: var(--coverpage-bgcolor);
+  }
+  to {
+    background-color: var(--select-page-bgcolor);
+  }
+}
+
+@keyframes coverToInput {
+  from {
+    background-color: var(--coverpage-bgcolor);
+  }
+  to {
+    background-color: var(--input-page-bgcolor);
   }
 }
